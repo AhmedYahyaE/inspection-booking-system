@@ -80,7 +80,14 @@ A modular, multi-tenant inspection booking system built with Laravel 12, featuri
 ```bash
 php artisan test
 ```
-(Feature tests are recommended for all endpoints.)
+(Feature and unit tests are included for booking creation and conflict logic.)
+
+---
+
+## API Testing with Postman
+- Download the ready-to-use Postman collection: [InspectionBookingSystem.postman_collection.json](./InspectionBookingSystem.postman_collection.json)
+- Import it into Postman, set your `base_url` and `token` variables, and test all endpoints easily.
+- All requests include the correct headers and inherit Bearer token authentication from the collection.
 
 ---
 
@@ -88,13 +95,3 @@ php artisan test
 - Modular structure: All business logic, models, controllers, and routes are in `/Modules`.
 - API Resources are used for all responses.
 - Seeders provide demo tenants, users, teams, availabilities, and bookings.
-
----
-
-## (Optional) API Documentation
-- You can use Postman or Swagger to document and test the API.
-
----
-
-## License
-MIT

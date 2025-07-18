@@ -5,13 +5,21 @@
     "description": "Test all endpoints for the Inspection Booking System (Laravel 12 Modular HMVC)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{token}}", "type": "string" }
+    ]
+  },
   "item": [
     {
       "name": "Auth",
+      "auth": { "type": "noauth" },
       "item": [
         {
           "name": "Register",
           "request": {
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [
               { "key": "Content-Type", "value": "application/json" },
@@ -19,7 +27,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tenant_name\": \"Demo Tenant\",\n  \"name\": \"Admin User\",\n  \"email\": \"admin@demo.com\",\n  \"password\": \"password\",\n  \"password_confirmation\": \"password\"\n}"
+              "raw": "{\n  \"tenant_name\": \"Demo Tenant\",\n  \"name\": \"Admin User\",\n  \"email\": \"admin1@demo.com\",\n  \"password\": \"12345678\",\n  \"password_confirmation\": \"12345678\"\n}"
             },
             "url": { "raw": "{{base_url}}/api/v1/auth/register", "host": ["{{base_url}}"], "path": ["api", "v1", "auth", "register"] }
           }
@@ -27,6 +35,7 @@
         {
           "name": "Login",
           "request": {
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [
               { "key": "Content-Type", "value": "application/json" },
@@ -34,7 +43,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@demo.com\",\n  \"password\": \"password\"\n}"
+              "raw": "{\n  \"email\": \"admin1@demo.com\",\n  \"password\": \"12345678\"\n}"
             },
             "url": { "raw": "{{base_url}}/api/v1/auth/login", "host": ["{{base_url}}"], "path": ["api", "v1", "auth", "login"] }
           }
@@ -47,9 +56,9 @@
         {
           "name": "Get Current Tenant",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Accept", "value": "application/json" }
             ],
             "url": { "raw": "{{base_url}}/api/v1/tenant", "host": ["{{base_url}}"], "path": ["api", "v1", "tenant"] }
@@ -63,9 +72,9 @@
         {
           "name": "List Teams",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Accept", "value": "application/json" }
             ],
             "url": { "raw": "{{base_url}}/api/v1/teams", "host": ["{{base_url}}"], "path": ["api", "v1", "teams"] }
@@ -74,9 +83,9 @@
         {
           "name": "Create Team",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Content-Type", "value": "application/json" },
               { "key": "Accept", "value": "application/json" }
             ],
@@ -90,9 +99,9 @@
         {
           "name": "Update Team",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "PUT",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Content-Type", "value": "application/json" },
               { "key": "Accept", "value": "application/json" }
             ],
@@ -106,9 +115,9 @@
         {
           "name": "Delete Team",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "DELETE",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Accept", "value": "application/json" }
             ],
             "url": { "raw": "{{base_url}}/api/v1/teams/1", "host": ["{{base_url}}"], "path": ["api", "v1", "teams", "1"] }
@@ -117,9 +126,9 @@
         {
           "name": "Set Team Availability",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Content-Type", "value": "application/json" },
               { "key": "Accept", "value": "application/json" }
             ],
@@ -133,9 +142,9 @@
         {
           "name": "Generate Slots",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Accept", "value": "application/json" }
             ],
             "url": {
@@ -157,9 +166,9 @@
         {
           "name": "List Bookings",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Accept", "value": "application/json" }
             ],
             "url": { "raw": "{{base_url}}/api/v1/bookings", "host": ["{{base_url}}"], "path": ["api", "v1", "bookings"] }
@@ -168,9 +177,9 @@
         {
           "name": "Book a Slot",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Content-Type", "value": "application/json" },
               { "key": "Accept", "value": "application/json" }
             ],
@@ -184,9 +193,9 @@
         {
           "name": "Cancel Booking",
           "request": {
+            "auth": { "type": "inherit" },
             "method": "DELETE",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}", "type": "text" },
               { "key": "Accept", "value": "application/json" }
             ],
             "url": { "raw": "{{base_url}}/api/v1/bookings/1", "host": ["{{base_url}}"], "path": ["api", "v1", "bookings", "1"] }
