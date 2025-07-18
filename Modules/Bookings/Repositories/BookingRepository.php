@@ -39,12 +39,10 @@ class BookingRepository implements BookingRepositoryInterface
         $query = Booking::where('team_id', $teamId)
             ->where('date', $date)
             ->where(function ($q) use ($startTime, $endTime) {
-                $q->whereBetween('start_time', [$startTime, $endTime])
-                  ->orWhereBetween('end_time', [$startTime, $endTime])
-                  ->orWhere(function ($q2) use ($startTime, $endTime) {
-                      $q2->where('start_time', '<', $startTime)
-                         ->where('end_time', '>', $endTime);
-                  });
+                $q->where(function ($q2) use ($startTime, $endTime) {
+                    $q2->where('start_time', '<', $endTime)
+                        ->where('end_time', '>', $startTime);
+                });
             });
         if ($excludeBookingId) {
             $query->where('id', '!=', $excludeBookingId);
