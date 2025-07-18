@@ -12,7 +12,7 @@ class ModuleRouteServiceProvider extends ServiceProvider
         $modulesPath = base_path('Modules');
         if (is_dir($modulesPath)) {
             foreach (scandir($modulesPath) as $module) {
-                $routeFile = $modulesPath . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'routes.php';
+                $routeFile = $modulesPath . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'api.php';
                 if (is_file($routeFile)) {
                     Route::middleware('api')->group($routeFile);
                 }

@@ -6,22 +6,28 @@ use Illuminate\Http\Request;
 use Modules\Teams\Services\TeamService;
 use Modules\Availability\Services\AvailabilityService;
 use Illuminate\Support\Facades\Auth;
+use Modules\Teams\Resources\TeamResource;
+use Modules\Teams\Resources\TeamCollection;
+use Modules\Teams\Services\SlotGenerationService;
 
 class TeamController
 {
     protected $teams;
     protected $availability;
+    protected $slotGenerator;
 
-    public function __construct(TeamService $teams, AvailabilityService $availability)
+    public function __construct(TeamService $teams, AvailabilityService $availability, SlotGenerationService $slotGenerator)
     {
         $this->teams = $teams;
         $this->availability = $availability;
+        $this->slotGenerator = $slotGenerator;
     }
 
     public function index(Request $request)
     {
         $tenantId = Auth::user()->tenant_id;
-        return response()->json($this->teams->listTeamsForTenant($tenantId));
+        $teams = $this->teams->listTeamsForTenant($tenantId);
+        return new TeamCollection($teams);
     }
 
     public function store(Request $request)
@@ -32,7 +38,7 @@ class TeamController
         ]);
         $data['tenant_id'] = $tenantId;
         $team = $this->teams->createTeam($data);
-        return response()->json($team, 201);
+        return (new TeamResource($team))->response()->setStatusCode(201);
     }
 
     public function update(Request $request, $id)
@@ -41,7 +47,7 @@ class TeamController
             'name' => 'required|string|max:255',
         ]);
         $team = $this->teams->updateTeam($id, $data);
-        return response()->json($team);
+        return new TeamResource($team);
     }
 
     public function destroy($id)
@@ -64,8 +70,14 @@ class TeamController
 
     public function generateSlots(Request $request, $id)
     {
-        // This will call a SlotGenerationService in a real implementation
-        // For now, just return a placeholder
-        return response()->json(['slots' => []]);
+        $from = $request->query('from');
+        $to = $request->query('to');
+        if (!$from || !$to) {
+            return response()->json(['message' => 'from and to query parameters are required'], 422);
+        }
+        $tenantId = Auth::user()->tenant_id;
+        $team = $this->teams->findForTenant($tenantId, $id);
+        $slots = $this->slotGenerator->generateSlots($team, $from, $to);
+        return response()->json(['slots' => $slots]);
     }
 }

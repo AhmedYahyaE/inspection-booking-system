@@ -5,6 +5,8 @@ namespace Modules\Bookings\Controllers;
 use Illuminate\Http\Request;
 use Modules\Bookings\Services\BookingService;
 use Illuminate\Support\Facades\Auth;
+use Modules\Bookings\Resources\BookingResource;
+use Modules\Bookings\Resources\BookingCollection;
 
 class BookingController
 {
@@ -18,7 +20,8 @@ class BookingController
     public function index(Request $request)
     {
         $tenantId = Auth::user()->tenant_id;
-        return response()->json($this->bookings->listBookingsForTenant($tenantId));
+        $bookings = $this->bookings->listBookingsForTenant($tenantId);
+        return new BookingCollection($bookings);
     }
 
     public function store(Request $request)
@@ -36,7 +39,7 @@ class BookingController
             return response()->json(['message' => 'Booking conflict'], 409);
         }
         $booking = $this->bookings->createBooking($data);
-        return response()->json($booking, 201);
+        return (new BookingResource($booking))->response()->setStatusCode(201);
     }
 
     public function destroy($id)

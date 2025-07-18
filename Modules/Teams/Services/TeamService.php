@@ -32,4 +32,9 @@ class TeamService
     {
         return $this->teams->delete($id);
     }
+
+    public function findForTenant(int $tenantId, int $id)
+    {
+        return $this->teams->findForTenant($tenantId, $id);
+    }
 }
