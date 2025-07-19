@@ -11,6 +11,24 @@ A modular, multi-tenant inspection booking system built with Laravel 12, featuri
 
 ---
 
+## Technical Laravel Features Used
+
+This application leverages several advanced Laravel features:
+
+- **API Resource Classes**: All API responses use Laravel API Resources for consistent, transformable output.
+- **Eloquent Relationships**: Models use `belongsTo`, `hasMany`, and custom scopes for tenant and team logic.
+- **Form Request Validation**: All input is validated using Laravel's validation system for security and data integrity.
+- **Sanctum Authentication**: API authentication is handled via Laravel Sanctum for SPA/mobile-friendly token auth.
+- **Modular HMVC Structure**: Business logic, models, controllers, and routes are organized in `/Modules` for separation of concerns and scalability.
+- **Seeders & Factories**: Database seeding and factories are used for demo data and testing.
+- **Custom Services & Repositories**: Service and repository patterns are used for business logic abstraction.
+- **Conflict Detection Logic**: Booking logic includes conflict detection using Eloquent queries.
+- **Route Model Binding**: Used for cleaner controller methods and automatic model resolution.
+- **API Versioning**: Endpoints are versioned (e.g., `/api/v1/`) for future-proofing.
+- **Unit & Feature Testing**: Includes tests for booking logic and API endpoints.
+
+---
+
 ## Setup Instructions
 
 1. **Clone the repository:**
